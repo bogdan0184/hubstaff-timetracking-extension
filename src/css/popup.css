@@ -1,0 +1,78 @@
+body {
+    margin: 0;
+}
+h1 {
+    margin: 0;
+}
+#popup {
+    width: 400px;
+}
+#popup-header {
+    padding: 10px 0;
+    width: 100%;
+    text-align: center;
+    background-color: #292961;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+}
+#popup-header img {
+    float: left;
+    margin-right: 10px;
+}
+#popup-content {
+    border: #292961 solid 3px;
+}
+#time-display {
+    text-align: center;
+    font-size: 30px;
+}
+#time-display h2 {
+    margin: 0;
+}
+#time-button-row {
+    text-align: center;
+}
+#time-button-row button {
+    width: 125px;
+    margin: 0;
+    height: 50px;
+    font-size: 20px;
+    border: none;
+    background-color: aliceblue;
+}
+#time-button-row button:hover {
+    background-color: #292961;
+    color: #fff;
+    cursor: pointer;
+}
+#issue-table {
+    margin-top: 10px;
+}
+#issue-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+#issue-table td {
+    background-color: aliceblue;
+    border: #fff solid 1px;
+}
+#issue-table th {
+    background-color: #292961;
+    color: #fff;
+    border: #fff solid 1px;
+}
+#dashboard-button {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    height: 50px;
+    font-size: 20px;
+    border: none;
+    background-color: aliceblue;
+}
+#dashboard-button:hover {
+    background-color: #292961;
+    color: #fff;
+    cursor: pointer;
+}
