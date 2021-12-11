@@ -46,18 +46,18 @@ h1 {
     color: #fff;
     cursor: pointer;
 }
-#issue-table {
+#issue-table-div {
     margin-top: 10px;
 }
-#issue-table table {
+#issue-table-div table {
     width: 100%;
     border-collapse: collapse;
 }
-#issue-table td {
+#issue-table-div td {
     background-color: aliceblue;
     border: #fff solid 1px;
 }
-#issue-table th {
+#issue-table-div th {
     background-color: #292961;
     color: #fff;
     border: #fff solid 1px;

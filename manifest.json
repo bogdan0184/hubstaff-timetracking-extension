@@ -4,6 +4,9 @@
     "version": "1.0.0",
     "manifest_version": 3,
     "author": "Kevin Fritsch",
+    "background": {
+        "service_worker": "src/js/background.js"
+    },
     "permissions": ["storage"],
     "action": {
         "default_popup": "src/html/popup.html",
