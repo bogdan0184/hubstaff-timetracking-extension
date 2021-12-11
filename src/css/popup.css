@@ -46,6 +46,11 @@ h1 {
     color: #fff;
     cursor: pointer;
 }
+#time-button-row button:disabled {
+    background-color: aliceblue;
+    color: black;
+    cursor: default;
+}
 #issue-table-div {
     margin-top: 10px;
 }
@@ -74,5 +79,30 @@ h1 {
 #dashboard-button:hover {
     background-color: #292961;
     color: #fff;
+    cursor: pointer;
+}
+.btn-select {
+    background-color: aliceblue;
+    color: #000;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
+.btn-select:hover {
+    background-color: #292961;
+    color: #fff;
+    cursor: pointer;
+}
+.btn-selected {
+    background-color: #292961;
+    color: #fff;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+}
+.timer-button-activated:disabled {
+    background-color: #292961!important;
+    color: #fff!important;
+    border: none;
     cursor: pointer;
 }
