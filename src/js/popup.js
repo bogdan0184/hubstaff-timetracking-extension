@@ -14,23 +14,30 @@ let dashboardButton = document.getElementById('dashboard-button');
 let buttonStart = document.getElementById('time-start-button');
 let buttonStop = document.getElementById('time-stop-button');
 let buttonPause = document.getElementById('time-pause-button');
+let timeDisplay = document.getElementById('time-display');
+
+let timer = null;
+
+let port = chrome.runtime.connect();
 
 dashboardButton.addEventListener('click', function () {
      chrome.tabs.create({url: chrome.runtime.getURL("src/html/dashboard.html")});
 });
 
 buttonStart.addEventListener('click', function () {
+    chrome.storage.sync.get("currentIssue", function(data) {
+        if (data.currentIssue) {
+            
+            chrome.storage.sync.set({"timerStarted": true});
+            timer = runTimer();
+        }
+    });
     this.classList.add('timer-button-activated');
     buttonStop.classList.remove('timer-button-activated');
     buttonPause.classList.remove('timer-button-activated');
     buttonStart.disabled = true;
     buttonStop.disabled = false;
     buttonPause.disabled = false;
-    chrome.storage.sync.get("currentIssue", function(data) {
-        if (data.currentIssue) {
-        }
-    });
-        
 });
 
 buttonStop.addEventListener('click', function () {
@@ -40,6 +47,11 @@ buttonStop.addEventListener('click', function () {
     buttonStart.disabled = false;
     buttonStop.disabled = true;
     buttonPause.disabled = false;
+    clearInterval(timer);
+    chrome.storage.sync.set({"timerStarted": false});
+    chrome.storage.sync.set({"timerPaused": false});
+    chrome.storage.sync.set({"countedTime": 0});
+    timeDisplay.children[0].innerText = "00:00:00";
 });
 
 buttonPause.addEventListener('click', function () {
@@ -49,6 +61,9 @@ buttonPause.addEventListener('click', function () {
     buttonStart.disabled = false;
     buttonStop.disabled = false;
     buttonPause.disabled = true;
+    clearInterval(timer);
+    chrome.storage.sync.set({"timerStarted": false});
+    chrome.storage.sync.set({"timerPaused": true});
 });
 
 function selectIssue() {
@@ -127,6 +142,31 @@ function loadIssues() {
                                 buttonStop.disabled = false;
                                 let buttonPause = document.getElementById('time-pause-button');
                                 buttonPause.disabled = false;
+                                chrome.storage.sync.get(["timerStarted", "timerPaused"], function(data) {
+                                    if (data.timerStarted) {
+                                        let buttonStart = document.getElementById('time-start-button');
+                                        buttonStart.classList.add('timer-button-activated');
+                                        buttonStart.disabled = true;
+                                        chrome.storage.sync.get(["countedTime", "saveTime"], function(data) {
+                                            time = data.countedTime
+                                            if (data.saveTime) {
+                                                time += (Date.now() - data.saveTime) / 1000;
+                                            }
+                                            chrome.storage.sync.set({"countedTime": time});
+                                            chrome.storage.sync.set({"saveTime": 0});
+                                            timeDisplay.children[0].innerText = time.toHHMMSS();
+                                        });
+                                        timer = runTimer();
+                                    } else if (data.timerPaused) {
+                                        let buttonStop = document.getElementById('time-stop-button');
+                                        buttonStop.classList.add('timer-button-activated');
+                                        buttonStop.disabled = true;
+                                        let buttonPause = document.getElementById('time-pause-button');
+                                        buttonPause.classList.add('timer-button-activated');
+                                        buttonPause.disabled = true;
+                                        timeDisplay.children[0].innerText = data.countedTime.toHHMMSS();
+                                    }
+                                });
                             }
                         }
                     });
@@ -137,6 +177,15 @@ function loadIssues() {
                 });
         }
     });
+}
+
+function runTimer() {
+    return setInterval(function() {
+        chrome.storage.sync.get("countedTime", function(data) {
+            chrome.storage.sync.set({"countedTime": data.countedTime + 1});
+            timeDisplay.children[0].innerText = (data.countedTime + 1).toHHMMSS();
+        });
+    }, 1000);
 }
 
 loadIssues();
