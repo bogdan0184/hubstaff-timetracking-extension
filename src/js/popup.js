@@ -25,9 +25,21 @@ dashboardButton.addEventListener('click', function () {
 });
 
 buttonStart.addEventListener('click', function () {
-    chrome.storage.sync.get("currentIssue", function(data) {
-        if (data.currentIssue) {
-            
+    chrome.storage.sync.get(["currentIssue", "timerPaused"], function(cdata) {
+        if (cdata.currentIssue) {
+            chrome.storage.sync.get(cdata.currentIssue, function(data) {
+                let key = "startTime";
+                if (cdata.timerPaused) {
+                    key = "resumeTime";
+                }
+                if (data[cdata.currentIssue]) {
+                    data = data[cdata.currentIssue];
+                    data.push({[key]: new Date().getTime()});
+                    chrome.storage.sync.set({[cdata.currentIssue]: data});
+                } else {
+                    chrome.storage.sync.set({[cdata.currentIssue]: [{[key]: new Date().getTime()}]});
+                }
+            });
             chrome.storage.sync.set({"timerStarted": true});
             timer = runTimer();
         }
@@ -41,6 +53,19 @@ buttonStart.addEventListener('click', function () {
 });
 
 buttonStop.addEventListener('click', function () {
+    chrome.storage.sync.get("currentIssue", function(cdata) {
+        if (cdata.currentIssue) {
+            chrome.storage.sync.get(cdata.currentIssue, function(data) {
+                if (data[cdata.currentIssue]) {
+                    data = data[cdata.currentIssue];
+                    data.push({"stopTime": new Date().getTime()});
+                    chrome.storage.sync.set({[cdata.currentIssue]: data});
+                } else {
+                    chrome.storage.sync.set({[cdata.currentIssue]: [{"stopTime": new Date().getTime()}]});
+                }
+            });
+        }
+    });
     this.classList.add('timer-button-activated');
     buttonStart.classList.remove('timer-button-activated');
     buttonPause.classList.remove('timer-button-activated');
@@ -55,6 +80,19 @@ buttonStop.addEventListener('click', function () {
 });
 
 buttonPause.addEventListener('click', function () {
+    chrome.storage.sync.get("currentIssue", function(cdata) {
+        if (cdata.currentIssue) {
+            chrome.storage.sync.get([cdata.currentIssue], function(data) {
+                if (data[cdata.currentIssue]) {
+                    data = data[cdata.currentIssue];
+                    data.push({"pauseTime": new Date().getTime()});
+                    chrome.storage.sync.set({[cdata.currentIssue]: data});
+                } else {
+                    chrome.storage.sync.set({[cdata.currentIssue]: [{"pauseTime": new Date().getTime()}]});
+                }
+            });
+        }
+    });
     this.classList.add('timer-button-activated');
     buttonStop.classList.remove('timer-button-activated');
     buttonStart.classList.remove('timer-button-activated');
@@ -164,7 +202,9 @@ function loadIssues() {
                                         let buttonPause = document.getElementById('time-pause-button');
                                         buttonPause.classList.add('timer-button-activated');
                                         buttonPause.disabled = true;
-                                        timeDisplay.children[0].innerText = data.countedTime.toHHMMSS();
+                                        if (data.countedTime) {
+                                            timeDisplay.children[0].innerText = data.countedTime.toHHMMSS();
+                                        }
                                     }
                                 });
                             }
