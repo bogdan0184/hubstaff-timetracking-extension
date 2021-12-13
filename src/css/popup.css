@@ -61,6 +61,20 @@ h1 {
 #issue-table-div td {
     background-color: aliceblue;
     border: #fff solid 1px;
+    max-width: 216px;
+    max-height: 10px;
+}
+#issue-table-div td a {
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+#issue-table-div td a:hover {
+    overflow: visible;
+    text-overflow: visible;
+    white-space: normal;
+    display: block;
 }
 #issue-table-div th {
     background-color: #292961;

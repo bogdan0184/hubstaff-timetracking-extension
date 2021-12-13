@@ -52,9 +52,11 @@ buttonStart.addEventListener('click', function () {
     buttonPause.disabled = false;
 });
 
-buttonStop.addEventListener('click', function () {
-    chrome.storage.sync.get("currentIssue", function(cdata) {
-        if (cdata.currentIssue) {
+buttonStop.addEventListener('click', stopAction);
+
+function stopAction () {
+    chrome.storage.sync.get(["currentIssue", "countedTime"], function(cdata) {
+        if (cdata.currentIssue && cdata.countedTime) {
             chrome.storage.sync.get(cdata.currentIssue, function(data) {
                 if (data[cdata.currentIssue]) {
                     data = data[cdata.currentIssue];
@@ -66,7 +68,7 @@ buttonStop.addEventListener('click', function () {
             });
         }
     });
-    this.classList.add('timer-button-activated');
+    buttonStop.classList.add('timer-button-activated');
     buttonStart.classList.remove('timer-button-activated');
     buttonPause.classList.remove('timer-button-activated');
     buttonStart.disabled = false;
@@ -77,7 +79,7 @@ buttonStop.addEventListener('click', function () {
     chrome.storage.sync.set({"timerPaused": false});
     chrome.storage.sync.set({"countedTime": 0});
     timeDisplay.children[0].innerText = "00:00:00";
-});
+}
 
 buttonPause.addEventListener('click', function () {
     chrome.storage.sync.get("currentIssue", function(cdata) {
@@ -114,6 +116,7 @@ function selectIssue() {
                 issueRow.classList.remove('btn-selected');
                 issueRow.removeAttribute("disabled");
                 issueRow.innerText = "Select";
+                stopAction();
             }
         }
     });
@@ -186,7 +189,7 @@ function loadIssues() {
                                         buttonStart.classList.add('timer-button-activated');
                                         buttonStart.disabled = true;
                                         chrome.storage.sync.get(["countedTime", "saveTime"], function(data) {
-                                            time = data.countedTime
+                                            time = data.countedTime1
                                             if (data.saveTime) {
                                                 time += (Date.now() - data.saveTime) / 1000;
                                             }

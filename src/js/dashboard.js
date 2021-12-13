@@ -98,22 +98,37 @@ function loadTimetracker () {
                             });
                             listOfTimes = groupBy(listOfTimes, "date");
                             let timeAccordion = document.getElementById('time-accordion');
-                            for (const date in listOfTimes) {
+                            let listofKeys = Object.keys(listOfTimes);
+                            console.log(listOfTimes[Object.keys(listOfTimes)[0]]);
+                            let count = 0;
+                            for (let i = (listofKeys.length-1); i >= 0; i--) {
+                                let date = listofKeys[i];
+                                console.log(date);
+                                console.log(listOfTimes)
                                 let timeAccordionItem = document.createElement('div');
                                 timeAccordionItem.classList.add('accordion-item');
                                 let dateFormated = date.replaceAll("/", "x");
                                 let times = listOfTimes[date];
+                                let areaExpanded = false;
+                                if (count == 0) {
+                                    areaExpanded = true;
+                                }
                                 timeAccordionItem.innerHTML = `
                                 <h2 class="accordion-header" id="panelsStayOpen-${date}">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-${dateFormated}" aria-expanded="true" aria-controls="panelsStayOpen-${dateFormated}">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-${dateFormated}" aria-expanded="${areaExpanded}" aria-controls="panelsStayOpen-${dateFormated}">
                                         <h3>${date}</h3>
                                     </button>
                                 </h2>
                                 `;
+
                                 timeAccordion.appendChild(timeAccordionItem);
                                 let timeAccourdionBody = document.createElement('div');
                                 timeAccourdionBody.id = "panelsStayOpen-" + dateFormated;
-                                timeAccourdionBody.classList.add('accordion-collapse', 'collapse', 'show');
+                                timeAccourdionBody.classList.add('accordion-collapse', 'collapse');
+                                if (count == 0) {
+                                    timeAccourdionBody.classList.add('show');
+                                }
+                                count++;
                                 timeAccourdionBody.setAttribute('aria-labelledby', "panelsStayOpen-" + dateFormated);
                                 let timeAccourdionDivTable = document.createElement('div');
                                 timeAccourdionDivTable.classList.add('table-responsive', 'accordion-body');
