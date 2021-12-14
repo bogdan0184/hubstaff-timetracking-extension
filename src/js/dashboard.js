@@ -253,9 +253,8 @@ function commitTime() {
           .then((response) => response.json())
           .then((datas) => {
             let issue = datas.filter((issue) => issue.id == issueId)[0];
-            console.log(issue);
             let request = new Request(
-              `${data.gitlabUrl}api/v4/projects/${issue.project_id}/issues/${issue.iid}/time_estimate?assignee_id=${data.gitlabUserID}`,
+              `${data.gitlabUrl}api/v4/projects/${issue.project_id}/issues/${issue.iid}/add_spent_time?assignee_id=${data.gitlabUserID}`,
               {
                 method: "POST",
                 headers: {
@@ -268,10 +267,6 @@ function commitTime() {
               }
             );
             fetch(request)
-              .then((response) => response.json())
-              .then((data) => {
-                console.log(data);
-              });
           });
       }
     }

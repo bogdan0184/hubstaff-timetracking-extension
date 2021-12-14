@@ -63,8 +63,8 @@ buttonStart.addEventListener("click", function () {
 buttonStop.addEventListener("click", stopAction);
 
 function stopAction() {
-  chrome.storage.sync.get(["currentIssue", "countedTime"], function (cdata) {
-    if (cdata.currentIssue && cdata.countedTime) {
+  chrome.storage.sync.get(["currentIssue", "countedTime", "timerPaused"], function (cdata) {
+    if (cdata.currentIssue && cdata.countedTime && !cdata.timerPaused) {
       chrome.storage.sync.get(cdata.currentIssue, function (data) {
         if (data[cdata.currentIssue]) {
           data = data[cdata.currentIssue];
@@ -83,7 +83,7 @@ function stopAction() {
   buttonPause.classList.remove("timer-button-activated");
   buttonStart.disabled = false;
   buttonStop.disabled = true;
-  buttonPause.disabled = false;
+  buttonPause.disabled = true;
   clearInterval(timer);
   chrome.storage.sync.set({ timerStarted: false });
   chrome.storage.sync.set({ timerPaused: false });
@@ -120,7 +120,6 @@ buttonPause.addEventListener("click", function () {
 
 function selectIssue() {
   chrome.storage.sync.get("currentIssue", function (data) {
-    console.log(data);
     if (data.currentIssue) {
       let issueRow = document.getElementById(data.currentIssue + "-button");
       if (issueRow) {
@@ -139,8 +138,8 @@ function selectIssue() {
   issueRow.setAttribute("disabled", true);
   issueRow.innerText = "Selected";
   buttonStart.disabled = false;
-  buttonStop.disabled = false;
-  buttonPause.disabled = false;
+  buttonStop.disabled = true;
+  buttonPause.disabled = true;
 }
 
 function loadIssues() {
@@ -199,42 +198,27 @@ function loadIssues() {
                   issueRow.classList.remove("btn-select");
                   issueRow.setAttribute("disabled", true);
                   issueRow.innerText = "Selected";
-                  let buttonStart =
-                    document.getElementById("time-start-button");
                   buttonStart.disabled = false;
-                  let buttonStop = document.getElementById("time-stop-button");
-                  buttonStop.disabled = false;
-                  let buttonPause =
-                    document.getElementById("time-pause-button");
-                  buttonPause.disabled = false;
+                  buttonStop.disabled = true;
+                  buttonPause.disabled = true;
                   chrome.storage.sync.get(
-                    ["timerStarted", "timerPaused"],
+                    ["timerStarted", "timerPaused", "countedTime", "saveTime"],
                     function (data) {
                       if (data.timerStarted) {
-                        let buttonStart =
-                          document.getElementById("time-start-button");
                         buttonStart.classList.add("timer-button-activated");
                         buttonStart.disabled = true;
-                        chrome.storage.sync.get(
-                          ["countedTime", "saveTime"],
-                          function (data) {
-                            time = data.countedTime;
-                            if (data.saveTime) {
-                              time += (Date.now() - data.saveTime) / 1000;
-                            }
-                            chrome.storage.sync.set({ countedTime: time });
-                            chrome.storage.sync.set({ saveTime: 0 });
-                            timeDisplay.children[0].innerText = time.toHHMMSS();
-                          }
-                        );
+                        buttonStop.disabled = false;
+                        buttonPause.disabled = false;
+                        time = data.countedTime;
+                        if (data.saveTime) {
+                          time += (Date.now() - data.saveTime) / 1000;
+                        }
+                        chrome.storage.sync.set({ countedTime: time });
+                        chrome.storage.sync.set({ saveTime: 0 });
+                        timeDisplay.children[0].innerText = time.toHHMMSS();
                         timer = runTimer();
                       } else if (data.timerPaused) {
-                        let buttonStop =
-                          document.getElementById("time-stop-button");
-                        buttonStop.classList.add("timer-button-activated");
-                        buttonStop.disabled = true;
-                        let buttonPause =
-                          document.getElementById("time-pause-button");
+                        buttonStop.disabled = false;
                         buttonPause.classList.add("timer-button-activated");
                         buttonPause.disabled = true;
                         if (data.countedTime) {
