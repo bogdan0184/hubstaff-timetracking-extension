@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="../css/popup.css">
-    </head>
-    <body>
-        <div id="popup">
-            <div id="popup-header">
-                <img src="../img/gitlab32.png" alt="GitLab Logo"/>
-                <h1>GitLab Timetracker</h1>
-            </div>
-            <div id="popup-content">
-                <div id="time-display">
-                    <h2>00:00:00</h2>
-                </div>
-                <div id="time-button-row">
-                    <button disabled id="time-start-button">Start</button>
-                    <button disabled id="time-pause-button">Pause</button>
-                    <button disabled id="time-stop-button">Stop</button>
-                </div>
-                <div id="issue-table-div">
-                    <table id="issue-table">
-                        <tr>
-                            <th>#</th>
-                            <th>Issue</th>
-                            <th>State</th>
-                            <th>Time spent</th>
-                            <th>Selected</th>
-                        </tr>
-                    </table>
-                </div>
-                <div id="dashboard-button-row">
-                    <button id="dashboard-button">Dashboard</button>
-                </div>
-            </div>
+  <head>
+    <link rel="stylesheet" href="../css/popup.css" />
+  </head>
+  <body>
+    <div id="popup">
+      <div id="popup-header">
+        <img src="../img/gitlab32.png" alt="GitLab Logo" />
+        <h1>GitLab Timetracker</h1>
+      </div>
+      <div id="popup-content">
+        <div id="time-display">
+          <h2>00:00:00</h2>
         </div>
-    </body>
-    <script src="../js/popup.js"></script>
+        <div id="time-button-row">
+          <button disabled id="time-start-button">Start</button>
+          <button disabled id="time-pause-button">Pause</button>
+          <button disabled id="time-stop-button">Stop</button>
+        </div>
+        <div id="issue-table-div">
+          <table id="issue-table">
+            <tr>
+              <th>#</th>
+              <th>Issue</th>
+              <th>State</th>
+              <th>Time spent</th>
+              <th>Selected</th>
+            </tr>
+          </table>
+        </div>
+        <div id="dashboard-button-row">
+          <button id="dashboard-button">Dashboard</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="../js/popup.js"></script>
 </html>

@@ -1,48 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <!-- Bootstrap CSS -->
-        <link href="../../libs/bootstrap-5.0.2/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/layout.css">
-        <link rel="stylesheet" href="../css/options.css">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <title>GitLab Timetracker Options</title>
-    </head>
-    <body>
-        <nav class="navbar navbar-gitlab">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="../img/gitlab128.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-                    GitLab Timetracker Options
-                </a>
+    <!-- Bootstrap CSS -->
+    <link
+      href="../../libs/bootstrap-5.0.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/layout.css" />
+    <link rel="stylesheet" href="../css/options.css" />
+
+    <title>GitLab Timetracker Options</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-gitlab">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img
+            src="../img/gitlab128.png"
+            alt=""
+            width="30"
+            height="30"
+            class="d-inline-block align-text-top"
+          />
+          GitLab Timetracker Options
+        </a>
+      </div>
+    </nav>
+    <div id="settings">
+      <div class="container">
+        <h2>GitLab Settings</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="gitlab-url">GitLab URL</label>
+              <input
+                type="text"
+                class="form-control"
+                id="gitlab-url"
+                name="gitlab-url"
+                placeholder="https://gitlab.com/"
+              />
+              <div
+                id="validationServer03Feedback"
+                class="invalid-feedback invisible"
+              >
+                Please provide a valid GitLab URL.
+              </div>
             </div>
-        </nav>
-        <div id="settings">
-            <div class="container">
-                <h2>GitLab Settings</h2>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="gitlab-url">GitLab URL</label>
-                            <input type="text" class="form-control" id="gitlab-url" name="gitlab-url" placeholder="https://gitlab.com/">
-                            <div id="validationServer03Feedback" class="invalid-feedback invisible">
-                                Please provide a valid GitLab URL.
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="gitlab-pat">GitLab Personal Access Token</label>
-                            <input type="password" class="form-control" id="gitlab-pat" name="gitlab-pat">
-                            <div id="validationServer04Feedback" class="invalid-feedback invisible">
-                                Please provide a valid GitLab Personal Access Token.
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group">
+              <label for="gitlab-pat">GitLab Personal Access Token</label>
+              <input
+                type="password"
+                class="form-control"
+                id="gitlab-pat"
+                name="gitlab-pat"
+              />
+              <div
+                id="validationServer04Feedback"
+                class="invalid-feedback invisible"
+              >
+                Please provide a valid GitLab Personal Access Token.
+              </div>
             </div>
+          </div>
         </div>
-    </body>
-    <script src="../js/options.js"></script>
+      </div>
+    </div>
+  </body>
+  <script src="../js/options.js"></script>
 </html>

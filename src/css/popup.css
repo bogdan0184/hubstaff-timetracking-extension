@@ -1,122 +1,122 @@
 body {
-    margin: 0;
+  margin: 0;
 }
 h1 {
-    margin: 0;
+  margin: 0;
 }
 #popup {
-    width: 400px;
+  width: 400px;
 }
 #popup-header {
-    padding: 10px 0;
-    width: 100%;
-    text-align: center;
-    background-color: #292961;
-    color: #fff;
-    display: flex;
-    justify-content: center;
+  padding: 10px 0;
+  width: 100%;
+  text-align: center;
+  background-color: #292961;
+  color: #fff;
+  display: flex;
+  justify-content: center;
 }
 #popup-header img {
-    float: left;
-    margin-right: 10px;
+  float: left;
+  margin-right: 10px;
 }
 #popup-content {
-    border: #292961 solid 3px;
+  border: #292961 solid 3px;
 }
 #time-display {
-    text-align: center;
-    font-size: 30px;
+  text-align: center;
+  font-size: 30px;
 }
 #time-display h2 {
-    margin: 0;
+  margin: 0;
 }
 #time-button-row {
-    text-align: center;
+  text-align: center;
 }
 #time-button-row button {
-    width: 125px;
-    margin: 0;
-    height: 50px;
-    font-size: 20px;
-    border: none;
-    background-color: aliceblue;
+  width: 125px;
+  margin: 0;
+  height: 50px;
+  font-size: 20px;
+  border: none;
+  background-color: aliceblue;
 }
 #time-button-row button:hover {
-    background-color: #292961;
-    color: #fff;
-    cursor: pointer;
+  background-color: #292961;
+  color: #fff;
+  cursor: pointer;
 }
 #time-button-row button:disabled {
-    background-color: aliceblue;
-    color: black;
-    cursor: default;
+  background-color: aliceblue;
+  color: black;
+  cursor: default;
 }
 #issue-table-div {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 #issue-table-div table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 #issue-table-div td {
-    background-color: aliceblue;
-    border: #fff solid 1px;
-    max-width: 216px;
-    max-height: 10px;
+  background-color: aliceblue;
+  border: #fff solid 1px;
+  max-width: 150px;
+  max-height: 10px;
 }
 #issue-table-div td a {
-    overflow:hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
 }
 #issue-table-div td a:hover {
-    overflow: visible;
-    text-overflow: visible;
-    white-space: normal;
-    display: block;
+  overflow: visible;
+  text-overflow: visible;
+  white-space: normal;
+  display: block;
 }
 #issue-table-div th {
-    background-color: #292961;
-    color: #fff;
-    border: #fff solid 1px;
+  background-color: #292961;
+  color: #fff;
+  border: #fff solid 1px;
 }
 #dashboard-button {
-    width: 100%;
-    text-align: center;
-    margin-top: 10px;
-    height: 50px;
-    font-size: 20px;
-    border: none;
-    background-color: aliceblue;
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  height: 50px;
+  font-size: 20px;
+  border: none;
+  background-color: aliceblue;
 }
 #dashboard-button:hover {
-    background-color: #292961;
-    color: #fff;
-    cursor: pointer;
+  background-color: #292961;
+  color: #fff;
+  cursor: pointer;
 }
 .btn-select {
-    background-color: aliceblue;
-    color: #000;
-    width: 100%;
-    border: none;
-    cursor: pointer;
+  background-color: aliceblue;
+  color: #000;
+  width: 100%;
+  border: none;
+  cursor: pointer;
 }
 .btn-select:hover {
-    background-color: #292961;
-    color: #fff;
-    cursor: pointer;
+  background-color: #292961;
+  color: #fff;
+  cursor: pointer;
 }
 .btn-selected {
-    background-color: #292961;
-    color: #fff;
-    width: 100%;
-    border: none;
-    cursor: pointer;
+  background-color: #292961;
+  color: #fff;
+  width: 100%;
+  border: none;
+  cursor: pointer;
 }
 .timer-button-activated:disabled {
-    background-color: #292961!important;
-    color: #fff!important;
-    border: none;
-    cursor: pointer;
+  background-color: #292961 !important;
+  color: #fff !important;
+  border: none;
+  cursor: pointer;
 }
