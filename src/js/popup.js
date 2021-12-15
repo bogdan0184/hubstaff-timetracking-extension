@@ -48,6 +48,7 @@ buttonStart.addEventListener("click", function () {
           });
         }
       });
+      chrome.storage.sync.set({ timerPaused: false });
       chrome.storage.sync.set({ timerStarted: true });
       timer = runTimer();
     }

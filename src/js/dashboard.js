@@ -141,7 +141,6 @@ function loadTimetracker() {
                   if (count == 0) {
                     timeAccourdionBody.classList.add("show");
                   }
-                  count++;
                   timeAccourdionBody.setAttribute(
                     "aria-labelledby",
                     "panelsStayOpen-" + dateFormated
@@ -152,6 +151,10 @@ function loadTimetracker() {
                     "accordion-body"
                   );
                   timeAccourdionBody.appendChild(timeAccourdionDivTable);
+                  if (count > 0) {
+                    timeAccordionItem.getElementsByClassName("accordion-button")[0].classList.add("collapsed")
+                  }
+                  count++;
                   let timeAccourdionTable = document.createElement("table");
                   timeAccourdionTable.classList.add("table", "align-middle");
                   timeAccourdionTable.innerHTML = `
@@ -184,6 +187,7 @@ function loadTimetracker() {
                       timespans[timespans.length - 1].timespan.push({
                         right: time.time.stopTime,
                       });
+                      timespans[timespans.length - 1].done = true
                     } else if (time.time.hasOwnProperty("pauseTime")) {
                       timespans[timespans.length - 1].timespan.push({
                         right: time.time.pauseTime,
@@ -198,28 +202,37 @@ function loadTimetracker() {
                     let duration = getDuration(timespan.timespan);
                     let humanDuration = getHumanDuration(timespan.timespan);
                     let xhumanDuration = humanDuration.replaceAll(" ", "x");
-                    timeAccourdionTableRow.innerHTML = `
-                                    <td><a href='${
-                                      issue.web_url
-                                    }' target='_blank'>${
-                      issue.references.short
-                    }</a></td>
-                                    <td>${formatTimespan(
-                                      timespan.timespan
-                                    )}</td>
-                                    <td>${duration}</td>
-                                    <td><button class='commit-button ' id='${
-                                      issue.id
-                                    }-${xhumanDuration}'>Commit</button></td>
-                                    `;
-                    let buttons =
-                      timeAccourdionTableRow.getElementsByClassName(
-                        "commit-button"
-                      );
-                    for (const button of buttons) {
-                      button.addEventListener("click", commitTime);
-                    }
-                    timeAccourdionTableBody.appendChild(timeAccourdionTableRow);
+                    chrome.storage.sync.get([`committed-${issue.id}-${xhumanDuration}`], function(data) {
+                      let element = `<button class='commit-button' id='${
+                          issue.id
+                        }-${xhumanDuration}'>Commit</button>`
+                      if (data[`committed-${issue.id}-${xhumanDuration}`]) {
+                        element = `<strong class='commit-done'>Done :)</strong>`
+                      }
+                      if (!timespan.done) {
+                        element = `<strong>Doing...</strong>`
+                      }
+                      timeAccourdionTableRow.innerHTML = `
+                                      <td><a href='${
+                                        issue.web_url
+                                      }' target='_blank'>${
+                        issue.references.short
+                      }</a></td>
+                                      <td>${formatTimespan(
+                                        timespan.timespan
+                                      )}</td>
+                                      <td>${duration}</td>
+                                      <td>${element}</td>
+                                      `;
+                      let buttons =
+                        timeAccourdionTableRow.getElementsByClassName(
+                          "commit-button"
+                        );
+                      for (const button of buttons) {
+                        button.addEventListener("click", commitTime);
+                      }
+                      timeAccourdionTableBody.appendChild(timeAccourdionTableRow);
+                    });
                   }
                   timeAccourdionTable.appendChild(timeAccourdionTableBody);
                   timeAccourdionDivTable.appendChild(timeAccourdionTable);
@@ -266,11 +279,13 @@ function commitTime() {
                 }),
               }
             );
-            fetch(request)
+            fetch(request);
           });
       }
     }
   );
+  chrome.storage.sync.set({[`committed-${this.id}`]: true});
+  this.parentElement.innerHTML = `<strong class='commit-done'>Done :)</strong>`;
 }
 
 loadTimetracker();
