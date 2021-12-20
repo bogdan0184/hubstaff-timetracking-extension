@@ -69,6 +69,60 @@
         </div>
       </div>
     </div>
+    <div id="dashboard-settings">
+      <div class="container">
+        <h2 style="margin-top: 10px;">Dashboard Settings</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="mb-3 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="dashboard-day-amount-enabled"
+                name="dashboard-day-amount-enabled"
+                />
+              <label for="dashboard-day-amount-enabled" class="form-check-label">Show day amount in dashboard</label>
+            </div>
+            <div class="form-group hidden" id="dashboard-day-amount-div">
+              <label for="dashboard-day-amount">Day Amount</label>
+              <input
+                type="number"
+                class="form-control"
+                id="dashboard-day-amount"
+                name="dashboard-day-amount"
+                value="7"
+                min="1"
+                />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="developer-area">
+      <div class="container">
+        <hr class="text-danger"/>
+        <h2 class="text-danger">Developer area</h2>
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#warningResetModal">Reset data</button>
+      </div>
+    </div>
+    <div class="modal fade" id="warningResetModal" tabindex="-1" aria-labelledby="warningResetModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="warningResetModalLabel">Are you sure?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            The data cannot be restored.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="reset-data">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
+  <script src="../../libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js"></script>
   <script src="../js/options.js"></script>
 </html>

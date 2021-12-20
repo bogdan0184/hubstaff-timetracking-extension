@@ -65,16 +65,29 @@ buttonStop.addEventListener("click", stopAction);
 
 function stopAction() {
   chrome.storage.sync.get(["currentIssue", "countedTime", "timerPaused"], function (cdata) {
-    if (cdata.currentIssue && cdata.countedTime && !cdata.timerPaused) {
+    if (cdata.currentIssue) {
       chrome.storage.sync.get(cdata.currentIssue, function (data) {
-        if (data[cdata.currentIssue]) {
-          data = data[cdata.currentIssue];
-          data.push({ stopTime: new Date().getTime() });
-          chrome.storage.sync.set({ [cdata.currentIssue]: data });
+        if (!cdata.timerPaused) {
+          if (data[cdata.currentIssue]) {
+            data = data[cdata.currentIssue];
+            data.push({ stopTime: new Date().getTime() });
+            chrome.storage.sync.set({ [cdata.currentIssue]: data });
+          } else {
+            chrome.storage.sync.set({
+              [cdata.currentIssue]: [{ stopTime: new Date().getTime() }],
+            });
+          }
         } else {
-          chrome.storage.sync.set({
-            [cdata.currentIssue]: [{ stopTime: new Date().getTime() }],
-          });
+          if (data[cdata.currentIssue]) {
+            data = data[cdata.currentIssue];
+            console.log(data[data.length-1])
+            data.push({ stopTime: data[data.length-1].pauseTime });
+            chrome.storage.sync.set({ [cdata.currentIssue]: data });
+          } else {
+            chrome.storage.sync.set({
+              [cdata.currentIssue]: [{ stopTime: data[data.length-1].pauseTime }],
+            });
+          }
         }
       });
     }
@@ -128,10 +141,10 @@ function selectIssue() {
         issueRow.classList.remove("btn-selected");
         issueRow.removeAttribute("disabled");
         issueRow.innerText = "Select";
-        stopAction();
       }
     }
   });
+  stopAction();
   chrome.storage.sync.set({ currentIssue: this.id.split("-button")[0] });
   let issueRow = document.getElementById(this.id);
   issueRow.classList.add("btn-selected");
@@ -158,8 +171,7 @@ function loadIssues() {
         );
         fetch(request)
           .then((response) => response.json())
-          .then((data) => {
-            let issues = data.filter((issue) => issue.state === "opened");
+          .then((issues) => {
             let issueTable = document.getElementById("issue-table");
             issues.forEach((issue) => {
               let issueRow = document.createElement("tr");
@@ -243,6 +255,11 @@ function loadIssues() {
 }
 
 function runTimer() {
+  chrome.storage.sync.get("countedTime", function (data) {
+    if (!data.countedTime) {
+      chrome.storage.sync.set({ countedTime: 0 });
+    }
+  });
   return setInterval(function () {
     chrome.storage.sync.get("countedTime", function (data) {
       chrome.storage.sync.set({ countedTime: data.countedTime + 1 });

@@ -1,14 +1,47 @@
 let gitlabUrlInput = document.getElementById("gitlab-url");
 let gitlabPATInput = document.getElementById("gitlab-pat");
+let resetDataButton = document.getElementById("reset-data");
+let dashboardDayAmountEnabled = document.getElementById("dashboard-day-amount-enabled");
+let dashboardDayAmountDiv = document.getElementById("dashboard-day-amount-div");
+let dashboardDayAmount = document.getElementById("dashboard-day-amount");
 
 function constructSettings() {
-  chrome.storage.sync.get(["gitlabUrl", "gitlabPAT"], function (data) {
+  chrome.storage.sync.get(["gitlabUrl", "gitlabPAT", "dashboardDayAmountEnabled", "dashboardDayAmount"], function (data) {
     if (data.gitlabUrl) {
       gitlabUrlInput.value = data.gitlabUrl;
     }
     if (data.gitlabPAT) {
       gitlabPATInput.value = data.gitlabPAT;
     }
+    if (data.dashboardDayAmountEnabled) {
+      dashboardDayAmountEnabled.checked = data.dashboardDayAmountEnabled;
+      dashboardDayAmountDiv.classList.remove("hidden");
+      if (data.dashboardDayAmount) {
+        dashboardDayAmount.value = data.dashboardDayAmount;
+      } else {
+        dashboardDayAmount.value = 7;
+      }
+    }
+    dashboardDayAmountEnabled.addEventListener("change", function () {
+      chrome.storage.sync.set({
+        dashboardDayAmountEnabled: dashboardDayAmountEnabled.checked
+      });
+      if (dashboardDayAmountEnabled.checked) {
+        dashboardDayAmountDiv.classList.remove("hidden");
+        if (data.dashboardDayAmount) {
+          dashboardDayAmount.value = data.dashboardDayAmount;
+        } else {
+          dashboardDayAmount.value = 7;
+        }
+      } else {
+        dashboardDayAmountDiv.classList.add("hidden");
+      }
+    });
+    dashboardDayAmount.addEventListener("change", function () {
+      chrome.storage.sync.set({
+        dashboardDayAmount: dashboardDayAmount.value
+      });
+    });
     gitlabUrlInput.addEventListener("change", function () {
       chrome.storage.sync.set({ gitlabUrl: this.value });
       let request = new Request(`${this.value}api/v4/projects`, {});
@@ -61,6 +94,16 @@ function constructSettings() {
               .getElementById("validationServer04Feedback")
               .classList.remove("invisible");
           });
+      });
+    });
+  });
+  resetDataButton.addEventListener("click", function () {
+    chrome.storage.sync.get(["gitlabUrl", "gitlabPAT", "gitlabUserID"], function (data) {
+      chrome.storage.sync.clear();
+      chrome.storage.sync.set({
+        gitlabUrl: data.gitlabUrl,
+        gitlabPAT: data.gitlabPAT,
+        gitlabUserID: data.gitlabUserID,
       });
     });
   });
