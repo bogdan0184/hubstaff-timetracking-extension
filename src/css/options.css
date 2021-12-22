@@ -1,6 +1,10 @@
 #settings {
   margin-top: 10px;
 }
+.add-button:hover {
+  cursor: pointer;
+  opacity: 0.5;
+}
 .hidden {
   display: none;
 }

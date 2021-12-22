@@ -11,7 +11,7 @@
     />
     <link rel="stylesheet" href="../css/layout.css" />
     <link rel="stylesheet" href="../css/options.css" />
-
+    <link rel="stylesheet" href="../css/popup.css" />
     <title>GitLab Timetracker Options</title>
   </head>
   <body>
@@ -31,8 +31,8 @@
     </nav>
     <div id="settings">
       <div class="container">
-        <h2>GitLab Settings</h2>
         <div class="row">
+          <h2>GitLab Settings</h2>
           <div class="col-md-12">
             <div class="form-group">
               <label for="gitlab-url">GitLab URL</label>
@@ -63,6 +63,93 @@
                 class="invalid-feedback invisible"
               >
                 Please provide a valid GitLab Personal Access Token.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 10px">
+          <h2>Layout Settings</h2>
+          <div class="col-md-12">
+            <section>
+              <div id="layout-width-box" class="grow-with-content">
+                <div id="popup-header">
+                  <img src="../img/gitlab32.png" alt="GitLab Logo" />
+                  <h1>GitLab Timetracker</h1>
+                </div>
+                <div id="popup-content">
+                  <div id="time-display">
+                    <h2>00:00:00</h2>
+                  </div>
+                  <div id="time-button-row">
+                    <button disabled id="time-start-button">Start</button>
+                    <button disabled id="time-pause-button">Pause</button>
+                    <button disabled id="time-stop-button">Stop</button>
+                  </div>
+                  <div id="current-issue"><h2>No Issue selected!</h2></div>
+                  <input
+                    id="issue-table-search-box"
+                    class="issue-input-types"
+                    placeholder="Search for Issue Title"
+                  />
+                  <select id="issue-table-sort-box" class="issue-input-types">
+                    <option value="created_at">Created at</option>
+                    <option selected value="due_date">Due Date</option>
+                    <option value="label_priority">Label priority</option>
+                    <option value="milestone_due">Milestone due</option>
+                    <option value="popularity">Popularity</option>
+                    <option value="priority">Priority</option>
+                    <option value="relative_position">Relative position</option>
+                    <option value="title">Title</option>
+                    <option value="updated_at">Updated at</option>
+                    <option value="weight">Weight</option>
+                  </select>
+                  <button id="asc-desc-button" class="issue-input-types">
+                    ^
+                  </button>
+                  <div id="issue-table-div">
+                    <table id="issue-table">
+                      <tr id="issue-table-row"></tr>
+                    </table>
+                  </div>
+                  <div id="dashboard-button-row">
+                    <button id="dashboard-button">Dashboard</button>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <div class="row" style="margin-top: 10px">
+              <h4>Add Items to table</h4>
+              <small class="text-muted"
+                >Move Items in table via drag and drop.</small
+              >
+              <div class="col-md-4">
+                <ul class="list-group" id="issue-list-group"></ul>
+              </div>
+            </div>
+            <div class="row g-3 align-items-center" style="margin-top: 0px">
+              <div class="col-auto">
+                <label for="layout-width-input" class="col-form-label"
+                  >Width</label
+                >
+              </div>
+              <div class="col-auto">
+                <input
+                  type="number"
+                  id="layout-width-input"
+                  class="form-control"
+                  aria-describedby="widthpxInline"
+                  min="400"
+                  max="800"
+                />
+                <div
+                  id="validationServer05Feedback"
+                  class="invalid-feedback invisible"
+                >
+                  Please provide a number between 400 and 800.
+                </div>
+              </div>
+              <div class="col-auto">
+                <span id="widthpxInline" class="form-text">px</span>
               </div>
             </div>
           </div>
@@ -125,4 +212,5 @@
   </body>
   <script src="../../libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js"></script>
   <script src="../js/options.js"></script>
+  <script src="../js/draganddrop.js"></script>
 </html>

@@ -19,22 +19,27 @@ h1 {
 #popup-header img {
   float: left;
   margin-right: 10px;
+  width: 32px;
+  height: 32px;
+}
+#popup-header h1 {
+  font-size: 2em;
 }
 #popup-content {
   border: #292961 solid 3px;
 }
 #time-display {
   text-align: center;
-  font-size: 30px;
 }
 #time-display h2 {
   margin: 0;
+  font-size: 60px;
 }
 #time-button-row {
   text-align: center;
 }
 #time-button-row button {
-  width: 125px;
+  width: 30%;
   margin: 0;
   height: 50px;
   font-size: 20px;
@@ -52,7 +57,8 @@ h1 {
   cursor: default;
 }
 #issue-table-div {
-  margin-top: 10px;
+  max-height: 230px;
+  overflow-y: auto;
 }
 #issue-table-div table {
   width: 100%;
@@ -63,6 +69,8 @@ h1 {
   border: #fff solid 1px;
   max-width: 150px;
   max-height: 10px;
+  font-size: 15px;
+  line-height: 1;
 }
 #issue-table-div td a {
   overflow: hidden;
@@ -80,6 +88,12 @@ h1 {
   background-color: #292961;
   color: #fff;
   border: #fff solid 1px;
+  font-size: 15px;
+  line-height: 1;
+}
+#issue-table-div td button {
+  font-size: 15px;
+  line-height: 1;
 }
 #dashboard-button {
   width: 100%;
@@ -119,4 +133,44 @@ h1 {
   color: #fff !important;
   border: none;
   cursor: pointer;
+}
+.issue-input-types {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 1%;
+  height: 25px;
+  border: none;
+  border-radius: 5px;
+}
+#issue-table-search-box {
+  width: 58%;
+}
+#issue-table-sort-box {
+  width: 28%;
+}
+#asc-desc-button {
+  width: 7%;
+}
+#asc-desc-button:hover {
+  background-color: #292961;
+  color: #fff;
+  cursor: pointer;
+}
+#current-issue {
+  text-align: center;
+}
+#current-issue h2 {
+  margin-bottom: 0;
+  margin-top: 10px;
+  font-size: 20px;
+}
+.grow-with-content {
+  min-width: 400px;
+  max-width: 800px;
+  resize: horizontal;
+  overflow: auto;
+}
+#issue-table-div thead {
+  position: sticky;
+  top: -1px;
 }
