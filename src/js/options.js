@@ -109,17 +109,27 @@ function constructSettings() {
         });
         fetch(request)
           .then((response) => {
-            if (gitlabUrlInput.classList.contains("is-invalid")) {
-              gitlabUrlInput.classList.remove("is-invalid");
+            if (gitlabPATInput.classList.contains("is-invalid")) {
+              gitlabPATInput.classList.remove("is-invalid");
               document
-                .getElementById("validationServer03Feedback")
+                .getElementById("validationServer04Feedback")
                 .classList.add("invisible");
             }
+            response.json().then((data) => {
+              if (data.message == "401 Unauthorized") {
+                gitlabPATInput.classList.add("is-invalid");
+                document
+                  .getElementById("validationServer04Feedback")
+                  .classList.remove("invisible");
+              } else {
+                chrome.storage.sync.set({ gitlabUserID: data.id });
+              }
+            });
           })
           .catch((error) => {
-            gitlabUrlInput.classList.add("is-invalid");
+            gitlabPATInput.classList.add("is-invalid");
             document
-              .getElementById("validationServer03Feedback")
+              .getElementById("validationServer04Feedback")
               .classList.remove("invisible");
           });
       });
