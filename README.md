@@ -1,7 +1,7 @@
 # hubstaff-timetracking-extension
 This is source of Hubstaff Extension using React.js
 
-<img src="./hubstaff.png"/>
+<img src="./app1.png"/>
 
 ## Getting Started
 
